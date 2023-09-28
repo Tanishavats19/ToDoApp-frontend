@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage":"http://localhost:3000/auth",
+  "homepage":"/auth",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
     "@testing-library/jest-dom": "^5.17.0",
