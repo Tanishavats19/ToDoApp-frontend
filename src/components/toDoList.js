@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import Task from './Task'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { login, logout, selectUser } from '../authentication/UserSlice';
+import { useSelector } from 'react-redux';
+import {  selectUser } from '../authentication/UserSlice';
 import { addTask, getToDoList, updateTask, deleteTask } from '../utils/HandleApi'
 import { useNavigate } from 'react-router-dom'
 import {auth} from '../firebase'
@@ -26,27 +26,20 @@ const ToDoList = () => {
   }
 
   const user = useSelector(selectUser)
-  const dispatch = useDispatch()
 
-  
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
-      if(authUser) {
-        dispatch(
-          login({uid: authUser.uid,
-            email:authUser.email
-          })
-        )
-      }
-      else {
-        dispatch(logout());
-      }
-    })
-  }, [dispatch])
+    if (!user) {
+      navigate('/auth');
+    }
 
-  if(!user){
-    navigate("/auth")
-  }
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigate('/');
+      }
+    });
+
+    return unsubscribe;
+  }, [user, navigate]);
 
   return (
     <div className='container'>
