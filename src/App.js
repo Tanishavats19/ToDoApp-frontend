@@ -7,9 +7,8 @@ import { login, logout, selectUser } from './authentication/UserSlice';
 import { auth } from './firebase';
 import { useEffect } from 'react';
 
-
-
 function App() {
+
 
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
@@ -46,6 +45,7 @@ function App() {
       
     </div>
   );
+
 }
 
 export default App;
