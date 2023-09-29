@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import Task from './Task'
 import { useState } from 'react'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout, selectUser } from '../authentication/UserSlice';
 import { addTask, getToDoList, updateTask, deleteTask } from '../utils/HandleApi'
 import { useNavigate } from 'react-router-dom'
 import {auth} from '../firebase'
@@ -22,6 +23,29 @@ const ToDoList = () => {
     setIsUpdating(true)
     setText(text)
     setTaskId(_id)
+  }
+
+  const user = useSelector(selectUser)
+  const dispatch = useDispatch()
+
+  
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if(authUser) {
+        dispatch(
+          login({uid: authUser.uid,
+            email:authUser.email
+          })
+        )
+      }
+      else {
+        dispatch(logout());
+      }
+    })
+  }, [dispatch])
+
+  if(!user){
+    navigate("/auth")
   }
 
   return (
