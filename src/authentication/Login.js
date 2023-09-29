@@ -3,8 +3,6 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 import { auth, provider } from '../firebase';
 import {useNavigate} from 'react-router-dom'
 
-
-
 function Login() {
 
     const [register, setRegister] = useState(true);
@@ -15,7 +13,6 @@ function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
- 
 
     const handleSigninGoogle =() =>{
         setLoading(true)
